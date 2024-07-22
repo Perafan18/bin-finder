@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('bins', function (Blueprint $table) {
             $table->id();
+            $table->string('bin')->unique(); // 000000
+            $table->string('type')->nullable(); // credit, debit
+            $table->string('brand')->nullable(); // visa, mastercard
+            $table->string('bank')->nullable(); // Bank of America
+            $table->string('country')->nullable(); // US
+            $table->foreignId('provider_id')->constrained();
             $table->timestamps();
         });
     }

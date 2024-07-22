@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('providers', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->unique();
+            $table->boolean('enabled')->default(true);
             $table->timestamps();
         });
     }

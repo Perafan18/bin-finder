@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Provider;
+use App\Models\Bin;
 use Illuminate\Database\Seeder;
 
 class BinSeeder extends Seeder
@@ -12,6 +13,8 @@ class BinSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Provider::all()->each(function (Provider $provider): void {
+            $provider->bins()->saveMany(Bin::factory()->count(10)->make());
+        });
     }
 }

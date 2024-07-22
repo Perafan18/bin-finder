@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Provider;
 use Illuminate\Database\Seeder;
 
 class ProviderSeeder extends Seeder
@@ -12,6 +12,10 @@ class ProviderSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Provider::create(['name' => 'binlist', 'enabled' => true]);
+        Provider::create(['name' => 'bincodes', 'enabled' => true]);
+        Provider::create(['name' => 'bincheck', 'enabled' => true]);
+        Provider::create(['name' => 'greip', 'enabled' => true]);
+        Provider::create(['name' => 'iinlist', 'enabled' => true]);
     }
 }
