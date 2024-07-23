@@ -11,6 +11,13 @@ class Provider extends Model
 
     protected $fillable = ['name', 'enabled'];
 
+    protected function casts(): array
+    {
+        return [
+            'enabled' => 'boolean',
+        ];
+    }
+
     public function bins()
     {
         return $this->hasMany(Bin::class);

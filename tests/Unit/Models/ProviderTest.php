@@ -22,4 +22,9 @@ it('has a factory', function () {
         ->and($provider->enabled)->toBeBool();
 });
 
+it('has bins relationship', function () {
+    $provider = Provider::factory()->hasBins(3)->create();
+
+    expect($provider->bins)->toHaveCount(3);
+});
 

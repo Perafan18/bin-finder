@@ -2,65 +2,73 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreBinRequest;
-use App\Http\Requests\UpdateBinRequest;
 use App\Models\Bin;
+use App\Services\BinServiceInterface;
+use Cache;
 
 class BinController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
+    protected BinServiceInterface $binService;
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function __construct(BinServiceInterface $binService)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreBinRequest $request)
-    {
-        //
+        $this->binService = $binService;
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Bin $bin)
+    public function show($bin)
     {
-        //
+        $cacheKey = $this->getCacheKey($bin);
+
+        if ($cachedBin = $this->getCachedBin($cacheKey)) {
+            return response()->json($cachedBin);
+        }
+
+        if ($binData = $this->getBinData($bin)) {
+            $this->cacheBinData($cacheKey, $binData);
+            return response()->json($binData);
+        }
+
+        if ($data = $this->binService->getBinInfo($bin)) {
+            $binData = $this->createBin($bin, $data);
+            $this->cacheBinData($cacheKey, $binData);
+            return response()->json($binData);
+        }
+
+        return response()->json(['message' => 'BIN not found'], 404);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Bin $bin)
+    protected function getCacheKey($bin)
     {
-        //
+        return "bin_info_{$bin}";
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateBinRequest $request, Bin $bin)
+    protected function getCachedBin($cacheKey)
     {
-        //
+        return Cache::get($cacheKey);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Bin $bin)
+    protected function getBinData($bin)
     {
-        //
+        return Bin::where('bin', $bin)->first();
+    }
+
+    protected function cacheBinData($cacheKey, $binData)
+    {
+        Cache::put($cacheKey, $binData, now()->addMinutes(30));
+    }
+
+    protected function createBin($bin, $data)
+    {
+        return Bin::create([
+            'bin' => $bin,
+            'type' => $data['type'],
+            'brand' => $data['brand'],
+            'bank' => $data['bank'],
+            'country' => $data['country'],
+            'provider_id' => $data['provider_id'],
+        ]);
     }
 }

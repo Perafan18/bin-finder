@@ -2,65 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreProviderRequest;
-use App\Http\Requests\UpdateProviderRequest;
 use App\Models\Provider;
 
 class ProviderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $providers = Provider::all();
+        return response()->json($providers);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function toggle($id)
     {
-        //
-    }
+        $provider = Provider::find($id);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreProviderRequest $request)
-    {
-        //
-    }
+        if (!$provider) {
+            return response()->json(['message' => 'Provider not found'], 404);
+        }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Provider $provider)
-    {
-        //
-    }
+        $provider->enabled = !$provider->enabled;
+        $provider->save();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Provider $provider)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateProviderRequest $request, Provider $provider)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Provider $provider)
-    {
-        //
+        return response()->json($provider);
     }
 }
