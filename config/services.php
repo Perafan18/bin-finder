@@ -35,4 +35,19 @@ return [
         ],
     ],
 
+    'bin_codes' => [
+        'api_key' => env('BIN_CODES_API_KEY'),
+    ],
+
+    'bin_check' => [
+        'api_key' => env('BIN_CHECK_API_KEY'),
+    ],
+
+    'greip' => [
+        'key' => env('GREIP_API_KEY'),
+    ],
+
+    'iinlist' => [
+        'key' => env('IINLIST_API_KEY'),
+    ],
 ];

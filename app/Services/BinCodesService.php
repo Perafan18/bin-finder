@@ -2,20 +2,18 @@
 
 namespace App\Services;
 
-use GuzzleHttp\Client;
-
-class BinCodesService implements BinServiceInterface
+class BinCodesService extends BaseBinService
 {
-    protected $client;
-
-    public function __construct()
-    {
-        $this->client = new Client();
-    }
-
     public function getBinInfo(string $bin)
     {
-        $response = $this->client->get("https://api.bincodes.com/bin/{$bin}");
+        $response = $this->client->get(
+            "https://api.bincodes.com/bin/?format=json&api_key={$this->api_key()}&bin={$bin}"
+        );
         return json_decode($response->getBody()->getContents(), true);
+    }
+
+    private function api_key()
+    {
+        return config('services.bin_codes.api_key');
     }
 }

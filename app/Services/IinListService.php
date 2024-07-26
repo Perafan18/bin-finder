@@ -2,20 +2,23 @@
 
 namespace App\Services;
 
-use GuzzleHttp\Client;
-
-class IinListService implements BinServiceInterface
+class IinListService extends BaseBinService
 {
-    protected $client;
-
-    public function __construct()
-    {
-        $this->client = new Client();
-    }
-
     public function getBinInfo(string $bin)
     {
-        $response = $this->client->get("https://api.iinlist.com/bin/{$bin}");
+        $response = $this->client->get(
+            "https://api.iinlist.com/cards?bin={$bin}",
+            [
+                'headers' => [
+                    'X-API-Key' => $this->api_key()
+                ]
+            ]
+        );
         return json_decode($response->getBody()->getContents(), true);
+    }
+
+    private function api_key()
+    {
+        return config('services.iinlist.key');
     }
 }

@@ -22,7 +22,10 @@ class MultiBinService implements BinServiceInterface
             try {
                 $data = $service->getBinInfo($bin);
                 if (!empty($data)) {
-                    return array_merge($data, ['provider' => $provider->name]);
+                    return array_merge(
+                        $service->response($data),
+                        ['provider_id' => $provider->id]
+                    );
                 }
             } catch (\Exception $e) {
                 \Log::error("Error fetching BIN info from {$provider->name}: {$e->getMessage()}");
