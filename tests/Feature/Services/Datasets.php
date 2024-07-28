@@ -227,3 +227,100 @@ dataset('bin codes success responses', [
         ]
     ]
 ]);
+
+
+dataset('Greip success responses', [
+    '452421 - Visa [CREDIT] (MX)' => [
+        [
+            "data" => [
+                "reason" => "",
+                "isValid" => true,
+                "info" => [
+                    "scheme" => [
+                        "name" => "Visa",
+                        "coName" => "Mada",
+                        "isLuna" => true,
+                        "isPrepaid" => false,
+                        "isCommercial" => false,
+                        "type" => "debit",
+                        "brand" => "Traditional",
+                        "currency" => "SAR"
+                    ],
+                    "detected_digits" => "4",
+                    "syntax" => [
+                        "gaps" => [4, 8, 12],
+                        "lengths" => [16, 18, 19],
+                        "code" => [
+                            "name" => "CVV",
+                            "size" => 3
+                        ]
+                    ],
+                    "bank" => [
+                        "id" => "588847",
+                        "identifier" => "80",
+                        "name" => "AL RAJHI BANKING AND INVESTMENT CORP.",
+                        "city" => "Riyadh",
+                        "url" => "https://www.alrajhibank.com.sa",
+                        "phone" => "+96611211600",
+                        "logo" => "https://greip.io/img/banks/al-rajhi.jpg",
+                        "latitude" => "25",
+                        "longitude" => "45"
+                    ],
+                    "country" => [
+                        "alpha2" => "SA",
+                        "name" => "Saudi Arabia",
+                        "code" => "966",
+                        "numeric" => "682",
+                        "emoji" => "🇸🇦",
+                        "continent" => "Asia",
+                        "languageCode" => "ar",
+                        "languageNative" => "العربية"
+                    ]
+                ]
+            ],
+            "status" => "success",
+            "executionTime" => 2
+        ]
+    ]
+]);
+
+
+dataset('Iin list success responses', [
+    '452421 - Visa [CREDIT] (MX)' => [
+        [
+            "count" => 1,
+            "_embedded" => [
+                "cards" => [
+                    [
+                        "scheme" => [
+                            "name" => "Visa"
+                        ],
+                        "range" => [
+                            "type" => "account"
+                        ],
+                        "product" => [
+                            "name" => "Visa Classic",
+                            "segment" => "consumer"
+                        ],
+                        "account" => [
+                            "funding" => "debit",
+                            "country" => [
+                                "code" => "DK"
+                            ],
+                            "currency" => [
+                                "code" => "DKK"
+                            ]
+                        ],
+                        "issuer" => [
+                            "name" => "Foreningen Af Danske Kortudstedere F.M.B.A"
+                        ],
+                        "fast_funds" => [
+                            "domestic" => false,
+                            "cross_border" => false
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ]
+]);

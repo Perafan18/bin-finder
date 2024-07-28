@@ -17,7 +17,8 @@ it('returns data from BinListService', function ($response) {
 
     $data = $service->getBinInfo('123456');
 
-    expect($data['type'])->toBeString()
+    expect($data)->toBeArray()
+        ->and($data['type'])->toBeString()
         ->and($data['scheme'])->toBeString()
         ->and($data['bank'])->toBeArray()
         ->and($data['country'])->toBeArray();
