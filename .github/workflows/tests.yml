@@ -5,6 +5,22 @@ on: ['push', 'pull_request']
 jobs:
   ci:
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: testing
+          MYSQL_USER: sail
+          MYSQL_PASSWORD: password
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
     strategy:
       fail-fast: true
       matrix:
@@ -22,8 +38,29 @@ jobs:
           tools: composer:v2
           coverage: xdebug
 
+      - name: Copy .env.ci to .env.testing
+        run: cp .env.ci .env.testing
+
       - name: Install Dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
-      - name: Tests
-        run: ./vendor/bin/pest
+      - name: Wait for MySQL
+        run: |
+          echo "Waiting for MySQL to be ready..."
+          for i in {1..60}; do
+            if mysql -h"127.0.0.1" -P3306 -usail -ppassword -e 'select 1' &> /dev/null; then
+              echo "MySQL is ready!"
+              break
+            fi
+            echo "MySQL is unavailable - sleeping"
+            sleep 1
+          done
+
+      - name: Run Migrations
+        run: php artisan migrate --env=testing --force
+
+      - name: Run Tests
+        run: |
+          echo "Running Tests..."
+          php artisan config:cache --env=testing
+          vendor/bin/pest
