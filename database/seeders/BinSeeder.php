@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Provider;
 use App\Models\Bin;
+use App\Models\Provider;
 use Illuminate\Database\Seeder;
 
 class BinSeeder extends Seeder

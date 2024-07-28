@@ -21,7 +21,7 @@ class MultiBinService implements BinServiceInterface
             $service = $this->services[$provider->name];
             try {
                 $data = $service->getBinInfo($bin);
-                if (!empty($data)) {
+                if (! empty($data)) {
                     return array_merge(
                         $service->response($data),
                         ['provider_id' => $provider->id]

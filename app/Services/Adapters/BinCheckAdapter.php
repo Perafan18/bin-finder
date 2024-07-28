@@ -4,7 +4,6 @@ namespace App\Services\Adapters;
 
 class BinCheckAdapter implements BinAdapterInterface
 {
-
     public function getType(array $response): ?string
     {
         return $response['BIN']['type'] ?? null;

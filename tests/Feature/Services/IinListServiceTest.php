@@ -10,7 +10,7 @@ it('returns data from IinListService', function ($response) {
     $client->shouldReceive('get')
         ->andReturn(new Response(200, [], json_encode($response)));
 
-    $service = new IinListService(new IinListAdapter());
+    $service = new IinListService(new IinListAdapter);
     $reflection = new ReflectionClass($service);
     $property = $reflection->getProperty('client');
     $property->setValue($service, $client);

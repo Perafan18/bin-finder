@@ -12,4 +12,3 @@ interface BinAdapterInterface
 
     public function getCountry(array $response): ?string;
 }
-

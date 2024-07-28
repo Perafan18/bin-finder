@@ -10,10 +10,11 @@ class IinListService extends BaseBinService
             "https://api.iinlist.com/cards?bin={$bin}",
             [
                 'headers' => [
-                    'X-API-Key' => $this->api_key()
-                ]
+                    'X-API-Key' => $this->api_key(),
+                ],
             ]
         );
+
         return json_decode($response->getBody()->getContents(), true);
     }
 

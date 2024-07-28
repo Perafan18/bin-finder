@@ -27,4 +27,3 @@ it('has bins relationship', function () {
 
     expect($provider->bins)->toHaveCount(3);
 });
-

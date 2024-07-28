@@ -10,7 +10,7 @@ it('returns data from BinCheckService', function ($response) {
     $client->shouldReceive('post')
         ->andReturn(new Response(200, [], json_encode($response)));
 
-    $service = new BinCheckService(new BinCheckAdapter());
+    $service = new BinCheckService(new BinCheckAdapter);
     $reflection = new ReflectionClass($service);
     $property = $reflection->getProperty('client');
     $property->setValue($service, $client);

@@ -16,6 +16,7 @@ class BinCheckService extends BaseBinService
                 ],
             ]
         );
+
         return json_decode($response->getBody()->getContents(), true);
     }
 

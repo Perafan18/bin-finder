@@ -4,7 +4,6 @@ namespace App\Services\Adapters;
 
 class GreipAdapter implements BinAdapterInterface
 {
-
     public function getType(array $response): ?string
     {
         return $response['data']['info']['scheme']['type'] ?? null;

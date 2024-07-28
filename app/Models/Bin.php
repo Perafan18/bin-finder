@@ -10,7 +10,7 @@ class Bin extends Model
     use HasFactory;
 
     protected $fillable = [
-        'bin', 'type', 'brand', 'bank', 'country', 'provider_id'
+        'bin', 'type', 'brand', 'bank', 'country', 'provider_id',
     ];
 
     public function provider()

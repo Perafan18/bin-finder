@@ -31,6 +31,5 @@ it('toggles provider status', function () {
     $response->assertStatus(200)
         ->assertJson(['enabled' => false]);
 
-
     expect($provider->fresh()->enabled)->toBeFalse();
 });

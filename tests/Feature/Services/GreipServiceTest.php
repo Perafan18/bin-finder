@@ -10,7 +10,7 @@ it('returns data from GreipService', function ($response) {
     $client->shouldReceive('get')
         ->andReturn(new Response(200, [], json_encode($response)));
 
-    $service = new GreipService(new GreipAdapter());
+    $service = new GreipService(new GreipAdapter);
     $reflection = new ReflectionClass($service);
     $property = $reflection->getProperty('client');
     $property->setValue($service, $client);

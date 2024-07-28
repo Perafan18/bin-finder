@@ -15,7 +15,7 @@ it('has fillable attributes', function () {
         'brand' => 'Visa',
         'bank' => 'Test Bank',
         'country' => 'US',
-        'provider_id' => $provider->id
+        'provider_id' => $provider->id,
     ]);
 
     expect($bin->bin)->toBe('123456')

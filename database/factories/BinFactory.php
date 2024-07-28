@@ -25,7 +25,7 @@ class BinFactory extends Factory
             'country' => fake()->countryCode,
             'provider_id' => function () {
                 return Provider::factory()->create()->id;
-            }
+            },
         ];
     }
 }

@@ -28,12 +28,14 @@ class BinController extends Controller
 
         if ($binData = $this->getBinData($bin)) {
             $this->cacheBinData($cacheKey, $binData);
+
             return response()->json($binData);
         }
 
         if ($data = $this->binService->getBinInfo($bin)) {
             $binData = $this->createBin($bin, $data);
             $this->cacheBinData($cacheKey, $binData);
+
             return response()->json($binData);
         }
 

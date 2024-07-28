@@ -2,10 +2,9 @@
 
 use App\Models\Provider;
 use App\Services\BinCodesService as BinCodesService;
-use App\Services\MultiBinService;
 use App\Services\BinListService as BinListService;
+use App\Services\MultiBinService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use function Pest\Laravel\mock;
 
 uses(RefreshDatabase::class);
 

@@ -8,11 +8,12 @@ use GuzzleHttp\Client;
 abstract class BaseBinService implements BinServiceInterface
 {
     protected Client $client;
+
     protected BinAdapterInterface $adapter;
 
     public function __construct(BinAdapterInterface $adapter)
     {
-        $this->client = new Client();
+        $this->client = new Client;
         $this->adapter = $adapter;
     }
 

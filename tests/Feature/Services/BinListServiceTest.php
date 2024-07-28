@@ -10,7 +10,7 @@ it('returns data from BinListService', function ($response) {
     $client->shouldReceive('get')
         ->andReturn(new Response(200, [], json_encode($response)));
 
-    $service = new BinListService(new BinListAdapter());
+    $service = new BinListService(new BinListAdapter);
     $reflection = new ReflectionClass($service);
     $property = $reflection->getProperty('client');
     $property->setValue($service, $client);
@@ -29,6 +29,6 @@ it('returns data from BinListService', function ($response) {
         ->and($response['type'])->toBe($data['type'])
         ->and($response['brand'])->toBe($data['scheme'])
         ->and($response['bank'])->toBe($data['bank']['name'] ?? null)
-        ->and($response['country'])->toBe($data['country']['alpha2'] );
+        ->and($response['country'])->toBe($data['country']['alpha2']);
 
 })->with('bin list success responses');

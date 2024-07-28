@@ -9,6 +9,7 @@ class ProviderController extends Controller
     public function index()
     {
         $providers = Provider::all();
+
         return response()->json($providers);
     }
 
@@ -16,11 +17,11 @@ class ProviderController extends Controller
     {
         $provider = Provider::find($id);
 
-        if (!$provider) {
+        if (! $provider) {
             return response()->json(['message' => 'Provider not found'], 404);
         }
 
-        $provider->enabled = !$provider->enabled;
+        $provider->enabled = ! $provider->enabled;
         $provider->save();
 
         return response()->json($provider);

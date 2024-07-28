@@ -10,8 +10,8 @@ class GreipService extends BaseBinService
             "https://greipapi.com/BINLookup?bin={$bin}",
             [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . $this->api_key()
-                ]
+                    'Authorization' => 'Bearer '.$this->api_key(),
+                ],
             ]
         );
 
@@ -20,6 +20,6 @@ class GreipService extends BaseBinService
 
     private function api_key()
     {
-        return config ('services.greip.key');
+        return config('services.greip.key');
     }
 }

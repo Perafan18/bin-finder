@@ -9,6 +9,7 @@ class BinCodesService extends BaseBinService
         $response = $this->client->get(
             "https://api.bincodes.com/bin/?format=json&api_key={$this->api_key()}&bin={$bin}"
         );
+
         return json_decode($response->getBody()->getContents(), true);
     }
 

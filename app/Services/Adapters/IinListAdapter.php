@@ -24,4 +24,3 @@ class IinListAdapter implements BinAdapterInterface
         return $response['_embedded']['cards'][0]['account']['country']['code'] ?? null;
     }
 }
-

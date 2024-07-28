@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Cache;
 
 uses(RefreshDatabase::class);
 
-
 it('fetches bin data from database if not cached and caches it', function () {
     $bin = Bin::factory()->create(['bin' => '123456', 'type' => 'debit']);
 
@@ -55,7 +54,7 @@ it('returns bin from service, store in database and cached', function () {
 });
 
 it('returns not found if bin data is unavailable', function () {
-    $response = $this->getJson("/api/bin/999999");
+    $response = $this->getJson('/api/bin/999999');
 
     $response->assertNotFound()
         ->assertJson(['message' => 'BIN not found']);
