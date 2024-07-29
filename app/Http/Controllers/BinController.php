@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Bin;
 use App\Services\BinServiceInterface;
 use Cache;
+use OpenApi\Attributes as OA;
 
+#[OA\PathItem(path: '/api/bin')]
 class BinController extends Controller
 {
     protected BinServiceInterface $binService;
@@ -15,9 +17,46 @@ class BinController extends Controller
         $this->binService = $binService;
     }
 
-    /**
-     * Display the specified resource.
-     */
+    #[OA\Get(
+        path: '/api/bin/{bin}',
+        summary: 'Fetch BIN information',
+        parameters: [
+            new OA\Parameter(
+                name: 'bin',
+                description: 'The BIN number to fetch information for',
+                in: 'path',
+                required: true,
+                schema: new OA\Schema(type: 'string')
+            ),
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Successful response',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'bin', type: 'string'),
+                        new OA\Property(property: 'type', type: 'string'),
+                        new OA\Property(property: 'brand', type: 'string'),
+                        new OA\Property(property: 'bank', type: 'string'),
+                        new OA\Property(property: 'country', type: 'string'),
+                        new OA\Property(property: 'provider_id', type: 'integer'),
+                    ],
+                    type: 'object'
+                )
+            ),
+            new OA\Response(
+                response: 404,
+                description: 'BIN not found',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'message', type: 'string'),
+                    ],
+                    type: 'object'
+                )
+            ),
+        ]
+    )]
     public function show($bin)
     {
         $cacheKey = $this->getCacheKey($bin);

@@ -1,0 +1,156 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "BinFinder API",
+        "description": "API for fetching and caching BIN (Bank Identification Number) information using multiple providers.",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/bin": {},
+        "/api/providers": {
+            "get": {
+                "summary": "List all BIN providers",
+                "operationId": "386f3ddc2b7b26effa6a559287ccbe4c",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "enabled": {
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/bin/{bin}": {
+            "get": {
+                "summary": "Fetch BIN information",
+                "operationId": "e066b9f6d094dccc0b87a63df4d6cf0d",
+                "parameters": [
+                    {
+                        "name": "bin",
+                        "in": "path",
+                        "description": "The BIN number to fetch information for",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "bin": {
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "type": "string"
+                                        },
+                                        "brand": {
+                                            "type": "string"
+                                        },
+                                        "bank": {
+                                            "type": "string"
+                                        },
+                                        "country": {
+                                            "type": "string"
+                                        },
+                                        "provider_id": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "BIN not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/providers/{id}/toggle": {
+            "post": {
+                "summary": "Enable or disable a BIN provider",
+                "operationId": "15d860f1b9837d9f2afc59578b0d66a4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the provider to toggle",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "enabled": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Provider not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

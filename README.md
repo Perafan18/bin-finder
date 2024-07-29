@@ -76,6 +76,12 @@ Run Laravel Pint to ensure code quality and consistency:
 ./vendor/bin/sail artisan pint
 ```
 
+## Generate Swagger Documentation
+To generate the Swagger documentation, run the following command:
+```sh
+./vendor/bin/sail artisan l5-swagger:generate
+```
+
 ## Usage
 
 The application exposes the following endpoints:
@@ -83,6 +89,8 @@ The application exposes the following endpoints:
 - `GET /api/bin/{bin}`: Fetch BIN information for the given BIN.
 - `GET /api/providers`: List all BIN providers.
 - `POST /api/providers/{provider}/toggle`: Enable or disable a BIN provider.
+- `GET /api/documentation`: View the Swagger documentation
+
 
 ## Contributing
 
