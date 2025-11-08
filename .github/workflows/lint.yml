@@ -21,11 +21,11 @@ jobs:
           extensions: json, dom, curl, libxml, mbstring
           coverage: none
 
-      - name: Install Pint
-        run: composer global require laravel/pint
+      - name: Install Dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
       - name: Run Pint
-        run: pint
+        run: ./vendor/bin/pint
 
       - name: Commit linted files
         uses: stefanzweifel/git-auto-commit-action@v5
