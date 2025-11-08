@@ -2,6 +2,9 @@ name: Fix Code Style
 
 on: ['push', 'pull_request']
 
+permissions:
+  contents: write
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -13,6 +16,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -28,6 +34,7 @@ jobs:
         run: ./vendor/bin/pint
 
       - name: Commit linted files
+        if: matrix.php == '8.2'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Fixes coding style"
