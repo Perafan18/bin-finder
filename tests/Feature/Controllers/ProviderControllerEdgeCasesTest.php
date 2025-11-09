@@ -5,87 +5,95 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('returns empty array when no providers exist', function () {
-    $response = $this->getJson('/api/providers');
+describe('ProviderController Edge Cases', function () {
+    describe('listing providers', function () {
+        it('returns empty array when no providers exist', function () {
+            $response = $this->getJson('/api/providers');
 
-    $response->assertOk()
-        ->assertJson([]);
-});
+            $response->assertOk()
+                ->assertJson([]);
+        });
 
-it('lists multiple providers', function () {
-    Provider::factory()->count(3)->create();
+        it('lists multiple providers', function () {
+            Provider::factory()->count(3)->create();
 
-    $response = $this->getJson('/api/providers');
+            $response = $this->getJson('/api/providers');
 
-    $response->assertOk()
-        ->assertJsonCount(3);
-});
+            $response->assertOk()
+                ->assertJsonCount(3);
+        });
 
-it('toggles provider from disabled to enabled', function () {
-    $provider = Provider::factory()->create(['enabled' => false]);
+        it('lists providers with correct structure', function () {
+            $provider = Provider::factory()->create([
+                'name' => 'TestProvider',
+                'enabled' => true,
+            ]);
 
-    $response = $this->postJson("/api/providers/{$provider->id}/toggle");
+            $response = $this->getJson('/api/providers');
 
-    $response->assertOk()
-        ->assertJson(['enabled' => true]);
+            $response->assertOk()
+                ->assertJsonStructure([
+                    '*' => ['id', 'name', 'enabled', 'created_at', 'updated_at'],
+                ]);
+        });
+    });
 
-    expect($provider->fresh()->enabled)->toBeTrue();
-});
+    describe('toggling provider status', function () {
+        it('toggles provider from disabled to enabled', function () {
+            $provider = Provider::factory()->create(['enabled' => false]);
 
-it('toggles provider multiple times', function () {
-    $provider = Provider::factory()->create(['enabled' => true]);
+            $response = $this->postJson("/api/providers/{$provider->id}/toggle");
 
-    $this->postJson("/api/providers/{$provider->id}/toggle");
-    expect($provider->fresh()->enabled)->toBeFalse();
+            $response->assertOk()
+                ->assertJson(['enabled' => true]);
 
-    $this->postJson("/api/providers/{$provider->id}/toggle");
-    expect($provider->fresh()->enabled)->toBeTrue();
+            expect($provider->fresh()->enabled)->toBeTrue();
+        });
 
-    $this->postJson("/api/providers/{$provider->id}/toggle");
-    expect($provider->fresh()->enabled)->toBeFalse();
-});
+        it('toggles provider multiple times', function () {
+            $provider = Provider::factory()->create(['enabled' => true]);
 
-it('returns 404 for non-existent provider id', function () {
-    $response = $this->postJson('/api/providers/999999/toggle');
+            $this->postJson("/api/providers/{$provider->id}/toggle");
+            expect($provider->fresh()->enabled)->toBeFalse();
 
-    $response->assertNotFound()
-        ->assertJson(['message' => 'Provider not found']);
-});
+            $this->postJson("/api/providers/{$provider->id}/toggle");
+            expect($provider->fresh()->enabled)->toBeTrue();
 
-it('returns 404 for negative provider id', function () {
-    $response = $this->postJson('/api/providers/-1/toggle');
+            $this->postJson("/api/providers/{$provider->id}/toggle");
+            expect($provider->fresh()->enabled)->toBeFalse();
+        });
 
-    $response->assertNotFound()
-        ->assertJson(['message' => 'Provider not found']);
-});
+        it('preserves other provider attributes when toggling', function () {
+            $provider = Provider::factory()->create([
+                'name' => 'TestProvider',
+                'enabled' => true,
+            ]);
 
-it('lists providers with correct structure', function () {
-    $provider = Provider::factory()->create([
-        'name' => 'TestProvider',
-        'enabled' => true,
-    ]);
+            $originalName = $provider->name;
+            $originalCreatedAt = $provider->created_at;
 
-    $response = $this->getJson('/api/providers');
+            $this->postJson("/api/providers/{$provider->id}/toggle");
 
-    $response->assertOk()
-        ->assertJsonStructure([
-            '*' => ['id', 'name', 'enabled', 'created_at', 'updated_at'],
-        ]);
-});
+            $provider->refresh();
 
-it('preserves other provider attributes when toggling', function () {
-    $provider = Provider::factory()->create([
-        'name' => 'TestProvider',
-        'enabled' => true,
-    ]);
+            expect($provider->name)->toBe($originalName)
+                ->and($provider->created_at->eq($originalCreatedAt))->toBeTrue();
+        });
+    });
 
-    $originalName = $provider->name;
-    $originalCreatedAt = $provider->created_at;
+    describe('error handling', function () {
+        it('returns 404 for non-existent provider id', function () {
+            $response = $this->postJson('/api/providers/999999/toggle');
 
-    $this->postJson("/api/providers/{$provider->id}/toggle");
+            $response->assertNotFound()
+                ->assertJson(['message' => 'Provider not found']);
+        });
 
-    $provider->refresh();
+        it('returns 404 for negative provider id', function () {
+            $response = $this->postJson('/api/providers/-1/toggle');
 
-    expect($provider->name)->toBe($originalName)
-        ->and($provider->created_at->eq($originalCreatedAt))->toBeTrue();
+            $response->assertNotFound()
+                ->assertJson(['message' => 'Provider not found']);
+        });
+    });
 });
