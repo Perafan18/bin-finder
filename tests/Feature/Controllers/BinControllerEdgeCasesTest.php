@@ -91,7 +91,7 @@ it('creates bin with all required fields from service response', function () {
     $provider = Provider::factory()->create(['enabled' => true]);
     $binNumber = '654321';
 
-    $this->mock(BinServiceInterface::class, function ($mock) use ($provider, $binNumber) {
+    $this->mock(BinServiceInterface::class, function ($mock) use ($provider) {
         $mock->shouldReceive('getBinInfo')
             ->andReturn([
                 'type' => 'prepaid',

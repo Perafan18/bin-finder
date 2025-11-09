@@ -1,7 +1,6 @@
 <?php
 
 use App\Services\Adapters\BinCheckAdapter;
-use App\Services\BaseBinService;
 use App\Services\BinCheckService;
 
 it('has a client instance', function () {

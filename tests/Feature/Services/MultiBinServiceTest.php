@@ -1,8 +1,8 @@
 <?php
 
 use App\Models\Provider;
-use App\Services\BinCodesService as BinCodesService;
-use App\Services\BinListService as BinListService;
+use App\Services\BinCodesService;
+use App\Services\BinListService;
 use App\Services\MultiBinService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 

@@ -25,7 +25,7 @@ it('handles HTTP client exceptions gracefully', function () {
     $property = $reflection->getProperty('client');
     $property->setValue($service, $mockClient);
 
-    expect(fn() => $service->getBinInfo('123456'))
+    expect(fn () => $service->getBinInfo('123456'))
         ->toThrow(ClientException::class);
 });
 
@@ -44,7 +44,7 @@ it('handles connection exceptions', function () {
     $property = $reflection->getProperty('client');
     $property->setValue($service, $mockClient);
 
-    expect(fn() => $service->getBinInfo('123456'))
+    expect(fn () => $service->getBinInfo('123456'))
         ->toThrow(ConnectException::class);
 });
 
@@ -60,7 +60,7 @@ it('handles invalid JSON response', function () {
     $property = $reflection->getProperty('client');
     $property->setValue($service, $mockClient);
 
-    expect(fn() => $service->getBinInfo('123456'))
+    expect(fn () => $service->getBinInfo('123456'))
         ->toThrow(\JsonException::class);
 });
 
@@ -76,7 +76,7 @@ it('handles empty response body', function () {
     $property = $reflection->getProperty('client');
     $property->setValue($service, $mockClient);
 
-    expect(fn() => $service->getBinInfo('123456'))
+    expect(fn () => $service->getBinInfo('123456'))
         ->toThrow(\JsonException::class);
 });
 
@@ -96,7 +96,7 @@ it('handles 500 server error', function () {
     $property = $reflection->getProperty('client');
     $property->setValue($service, $mockClient);
 
-    expect(fn() => $service->getBinInfo('123456'))
+    expect(fn () => $service->getBinInfo('123456'))
         ->toThrow(RequestException::class);
 });
 
@@ -116,6 +116,6 @@ it('handles rate limiting', function () {
     $property = $reflection->getProperty('client');
     $property->setValue($service, $mockClient);
 
-    expect(fn() => $service->getBinInfo('123456'))
+    expect(fn () => $service->getBinInfo('123456'))
         ->toThrow(ClientException::class);
 });
