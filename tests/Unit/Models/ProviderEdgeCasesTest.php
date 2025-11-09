@@ -52,7 +52,7 @@ describe('Provider Model Edge Cases', function () {
 
         expect(Bin::where('provider_id', $provider->id)->count())->toBe(3);
 
-        expect(fn() => $provider->delete())
+        expect(fn () => $provider->delete())
             ->toThrow(\Illuminate\Database\QueryException::class);
 
         expect(Provider::find($provider->id))->not->toBeNull();
