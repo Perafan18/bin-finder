@@ -60,7 +60,4 @@ jobs:
         run: php artisan migrate --env=testing --force
 
       - name: Run Tests
-        run: |
-          echo "Running Tests..."
-          php artisan config:cache --env=testing
-          vendor/bin/pest
+        run: vendor/bin/pest
