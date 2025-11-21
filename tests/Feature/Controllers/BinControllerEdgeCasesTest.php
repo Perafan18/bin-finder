@@ -21,10 +21,13 @@ describe('BinController Edge Cases', function () {
             Cache::shouldReceive('put')
                 ->once()
                 ->withArgs(function ($key, $value, $ttl) {
+                    $expectedTtl = now()->addMinutes(30);
+                    $diffInSeconds = abs($ttl->timestamp - $expectedTtl->timestamp);
+
                     return $key === 'bin_info_123456' &&
+                           $value instanceof \App\Models\Bin &&
                            $ttl instanceof \DateTimeInterface &&
-                           $ttl->diffInMinutes(now()) >= 29 &&
-                           $ttl->diffInMinutes(now()) <= 31;
+                           $diffInSeconds <= 5;
                 })
                 ->andReturn(true);
 
