@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('brand')->nullable(); // visa, mastercard
             $table->string('bank')->nullable(); // Bank of America
             $table->string('country')->nullable(); // US
-            $table->foreignId('provider_id')->constrained();
+            $table->foreignId('provider_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

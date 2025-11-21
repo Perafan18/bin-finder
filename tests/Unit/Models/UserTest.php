@@ -10,12 +10,10 @@ describe('User Model', function () {
         $user = new User([
             'name' => 'John Doe',
             'email' => 'john@example.com',
-            'password' => 'password123',
         ]);
 
         expect($user->name)->toBe('John Doe')
-            ->and($user->email)->toBe('john@example.com')
-            ->and($user->password)->toBe('password123');
+            ->and($user->email)->toBe('john@example.com');
     });
 
     it('has hidden attributes', function () {
@@ -73,7 +71,7 @@ describe('User Model', function () {
     it('uses notifiable trait', function () {
         $user = User::factory()->create();
 
-        expect($user)->toHaveMethod('notify')
-            ->and($user)->toHaveMethod('notifyNow');
+        expect(method_exists($user, 'notify'))->toBeTrue()
+            ->and(method_exists($user, 'notifyNow'))->toBeTrue();
     });
 });

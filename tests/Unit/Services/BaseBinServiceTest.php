@@ -4,6 +4,10 @@ use App\Services\Adapters\BinCheckAdapter;
 use App\Services\BinCheckService;
 
 describe('BaseBinService', function () {
+    afterEach(function () {
+        Mockery::close();
+    });
+
     it('has a client instance', function () {
         $service = new BinCheckService(new BinCheckAdapter);
 

@@ -20,7 +20,7 @@ class BinResource extends JsonResource
             'brand' => $this->brand,
             'bank' => $this->bank,
             'country' => $this->country,
-            'provider' => $this->provider,
+            'provider' => $this->provider_id,
         ];
     }
 }

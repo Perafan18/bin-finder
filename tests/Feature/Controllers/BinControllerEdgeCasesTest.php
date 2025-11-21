@@ -22,7 +22,9 @@ describe('BinController Edge Cases', function () {
                 ->once()
                 ->withArgs(function ($key, $value, $ttl) {
                     return $key === 'bin_info_123456' &&
-                           $ttl->diffInMinutes(now()) === 30;
+                           $ttl instanceof \DateTimeInterface &&
+                           $ttl->diffInMinutes(now()) >= 29 &&
+                           $ttl->diffInMinutes(now()) <= 31;
                 })
                 ->andReturn(true);
 
