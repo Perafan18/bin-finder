@@ -57,10 +57,11 @@ jobs:
           done
 
       - name: Run Migrations
+        env:
+          DB_HOST: 127.0.0.1
         run: php artisan migrate --env=testing --force
 
       - name: Run Tests
-        run: |
-          echo "Running Tests..."
-          php artisan config:cache --env=testing
-          vendor/bin/pest
+        env:
+          DB_HOST: 127.0.0.1
+        run: vendor/bin/pest

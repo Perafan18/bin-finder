@@ -17,7 +17,7 @@ class BinCheckService extends BaseBinService
             ]
         );
 
-        return json_decode($response->getBody()->getContents(), true);
+        return json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
     }
 
     private function api_key()
